@@ -19,14 +19,15 @@ enable_testing()
 add_subdirectory(${TOOLS_FOLDER}/googletest googletest_build)
 
 set(HEADERS
-	template_statemachine.hpp
-	template_types.hpp
+	OHD_statemachine.hpp
+	OHD_types.hpp
 )
 set(SOURCES
-	template_main.cpp
+	OHD_main.cpp
+	OHD_statemachine.cpp
 )
 
 add_library(${This} STATIC ${SOURCES} ${HEADERS})
-add_executable(TemplateCompExec ${SOURCES} ${HEADERS})
+add_executable(opencv-hood-detection-exec ${SOURCES} ${HEADERS})
 
 add_subdirectory(test)
