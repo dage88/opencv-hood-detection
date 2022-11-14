@@ -10,7 +10,7 @@
 
 -GoogleTest
 
--OpenCV release 4.6.0+
+-OpenCV (I took release 4.6.0 and used cmake-gui(8.1.0, x86_64, posix threads, seh) to configure and generate, and then mingw32-make to build)
 
 (Optionally, get VSCode and extensions for C/C++ and CMake)
 

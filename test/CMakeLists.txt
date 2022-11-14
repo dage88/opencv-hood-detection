@@ -16,7 +16,8 @@ add_executable(${This} ${SOURCES} ${HEADERS})
 target_link_libraries(${This} PUBLIC
 	gtest_main
 	gmock
-	opencv-hood-detection
+	opencv-hood-detection-lib
+	${OpenCV_LIBS}
 )
 
 #In VS Code, with "Ctrl+Shift+P -> Cmake: Run Tests" these tests will be executed (if CMakeLists.txt in ../ was detected)
