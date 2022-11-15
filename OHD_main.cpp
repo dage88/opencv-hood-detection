@@ -7,37 +7,65 @@
 #include "OHD_types.hpp"
 
 using namespace cv;
+using namespace std;
 
 int main(int argc, char **argv)
 {
-    Mat image;
     OHD_StateMachine sm;
-    event_t event = EVENT_INITIALIZE_REQUEST;
-    int counter = 0;
-
-    image = imread("D:/workspace/opencv-hood-detection/triangles.png");
-    if (!image.data)
-    {
-        printf("No image data \n");
-        return -1;
-    }
-    namedWindow("Display Image", WINDOW_AUTOSIZE);
-    imshow("Display Image", image);
-    waitKey(0);
-
-    sm.OHD_StateMachine::ProcessEvent(event);
+    VideoCapture cap0(0);
+    Mat img;
+    int pressedKey;
+    const int ESC_key = 0x1B;
 
     while (true)
     {
-        counter++;
-        if (counter % 1000 == 0)
+        switch (sm.getState())
         {
-            std::cout << counter << "\n";
-        }
-        else if (counter == 20001)
-        {
-            std::cout << "main end.";
-            return 0;
+
+        case OHD_STATE_UNINITIALIZED:
+            sm.onEntry();
+
+            sm.setEvent(OHD_EVENT_RUN_REQUEST);
+
+            sm.onExit();
+            break;
+
+        case OHD_STATE_STARTUP:
+            sm.onEntry();
+
+            namedWindow("Display Image", WINDOW_AUTOSIZE);
+            if (!cap0.isOpened())
+            {
+                cout << "Cannot open c0!";
+                sm.setEvent(OHD_EVENT_ERROR);
+            }
+            else
+            {
+                sm.setEvent(OHD_EVENT_STARTUP_SUCCESSFUL);
+            }
+
+            sm.onExit();
+            break;
+
+        case OHD_STATE_RUNNING:
+            sm.onEntry();
+
+            cap0.read(img);
+            imshow("Display Image", img);
+            pressedKey = waitKey(1);
+            if (pressedKey == ESC_key)
+            {
+                return -1; //We quit directly, as we do not need de-initialization.
+            }
+
+            sm.onExit();
+            break;
+
+        case OHD_STATE_ERROR:
+            // Continue to default (For now, no logging here)
+
+        default:
+            return -1;
         }
     };
 }
