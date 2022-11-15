@@ -2,7 +2,11 @@
 
 void OHD_StateMachine::onEntry()
 {
-    m_event = OHD_EVENT_NONE; // For now ok, as we do not have events coming from outside the statemachine.
+    if (m_event != OHD_EVENT_NONE)
+    {
+        m_event = OHD_EVENT_NONE; //For now ok to discard events, as we do not have events coming from outside the statemachine.
+        // Add statemachine here and insert specific actions if required.
+    }
 }
 
 void OHD_StateMachine::onExit()
