@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 {
     OHD_StateMachine sm;
     VideoCapture cap0(0);
-    Mat img;
+    Mat img, imgGray, imgBlur, imgEdges, imgGrayEdges, imgBlurredEdges;;
     int pressedKey;
     const int ESC_key = 0x1B;
 
@@ -51,11 +51,23 @@ int main(int argc, char **argv)
             sm.onEntry();
 
             cap0.read(img);
+
+            cvtColor(img, imgGray, COLOR_BGR2GRAY);
+            GaussianBlur(img, imgBlur, Size(3, 3), 3, 0);
+            Canny(img, imgEdges, 50, 150);
+            Canny(imgGray, imgGrayEdges, 50, 150);
+            Canny(imgBlur, imgBlurredEdges, 50, 150);
+
             imshow("Display Image", img);
+            imshow("Display gray Image", imgGray);
+            imshow("Display blurred Image", imgBlur);
+            imshow("Display edges on gray img", imgGrayEdges);
+            imshow("Display edges on blurred img", imgBlurredEdges);
+            imshow("Display edges on unprocessed img", imgEdges);
             pressedKey = waitKey(1);
             if (pressedKey == ESC_key)
             {
-                return -1; //We quit directly, as we do not need de-initialization.
+                return -1; // We quit directly, as we do not need de-initialization.
             }
 
             sm.onExit();
