@@ -1,16 +1,20 @@
-# OpenCV Hood Detection (OHD) 
+# OpenCV Hood Detection (OHD)
 
 
 # 1) Install Tools and add each tool to Windows path (system variables)
 -CMake
 
--MSYS2(with mingw-w64)
+-MSYS2(with mingw-w64) or directly Mingw-W64 (Adjust mingw settings, I used mingw-w64 8.1.0, x86_64, posix threads, seh)
 
 -Ninja
 
 -GoogleTest
 
--OpenCV (I took release 4.6.0 and used cmake-gui(8.1.0, x86_64, posix threads, seh) to configure and generate, and then mingw32-make to build)
+-OpenCV
+    -Download opencv release 4.6.0
+    -Configure and generate the opencv CMake files (I used the cmake-gui. I had to disable GStreamer as it caused problems).
+    -call mingw32-make in /build
+    -Also see https://www.youtube.com/watch?v=Rda-AfBXme4&ab_channel=MuchlisHarlyWinata for details
 
 (Optionally, get VSCode and extensions for C/C++ and CMake)
 

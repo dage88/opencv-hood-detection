@@ -19,6 +19,7 @@ enable_testing()
 add_subdirectory(${TOOLS_FOLDER}/googletest googletest_build)
 
 ################# OpenCV #################
+set(OpenCV_DIR ${TOOLS_FOLDER}/opencv/build)
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
@@ -32,8 +33,8 @@ set(SOURCES
 	OHD_statemachine.cpp
 )
 
-add_library(opencv-hood-detection-lib STATIC 
-	${SOURCES} 
+add_library(opencv-hood-detection-lib STATIC
+	${SOURCES}
 	${HEADERS}
 )
 
